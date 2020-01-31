@@ -6,6 +6,10 @@ language: java
 jdk:
   - openjdk8
   # - openjdk11
+addons:
+  apt:
+    packages:
+      - libxml2-utils
 
 services:
   - docker
@@ -23,6 +27,7 @@ before_install:
 
 install:
   - ant
+  - npm install -g bats
 
 before_script:
   - docker cp ./dist/*.xar exist-ci:exist/autodeploy
@@ -32,9 +37,8 @@ before_script:
   - docker ps
 
 script:
-  - ant test
-  - xmllint --xpath "//@failures = 0" result/*.xml
-  - xmllint --xpath "//@errors = 0" result/*.xml
+  - curl -s "http://0.0.0.0:8080/exist/rest/db/system/repo/schematron-exist-1.1.0/content/test/test-suite.xq" -o result/test-result.xml
+  - bats -t result/*.bats
 
 after_success:
   - docker stop exist-ci
