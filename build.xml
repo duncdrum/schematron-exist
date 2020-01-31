@@ -4,6 +4,7 @@
   <property name="project.version" value="${package(version)}"/>
   <property name="project.app" value="${package(abbrev)}"/>
   <property name="build.dir" value="dist"/>
+  <xmlproperty file="result/test-result.xml" collapseAttributes="true" keepRoot="false"/>
   <target name="clean" description="cleaning old builds">
     <tstamp/>
     <delete failonerror="false">
@@ -15,12 +16,29 @@
   <target name="xar" depends='clean' description="compile all source files">
     <tstamp/>
     <mkdir dir="${build.dir}"/>
-    <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="dist/**"></zip>
+    <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="dist/** result/**"></zip>
   </target>
-  <target name="test" description="running tests">
+  <target name="test-runner" description="running tests">
     <tstamp/>
-    <exec executable="echo" failonerror="true">
-      <arg value="'Hello test'"/>
+    <exec executable="curl" failonerror="true" output="result/test-result.xml">
+      <arg value="-s"/>
+      <arg value="exist-ci:8080/exist/rest/db/system/repo/schematron-exist-1.1/content/test/test-suite.xq"/>
     </exec>
+  </target>
+  <target name="test" depends='test-runner' description="parse test results">
+    <echoproperties prefix="testsuite.failures"/>
+    <!-- <fail message="There are failing tests">
+      <condition>
+        <matches string="${testsuite.failures}" pattern="^0,0,0,0,0$"/>
+      </condition>
+    </fail> -->
+    <echoproperties prefix="testsuite.errors"/>
+    <!-- <fail message="There are test errors">
+      <condition>
+          <matches string="${testsuite.errors}" pattern="^0,0,0,0,0$"/>
+
+      </condition>
+    </fail> -->
+    <!-- <echoproperties/> -->
   </target>
 </project>
