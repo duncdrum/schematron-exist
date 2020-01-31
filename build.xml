@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="xar" name="schematron-exist">
-    <xmlproperty file="expath-pkg.xml"/>
-    <property name="project.version" value="${package(version)}"/>
-    <property name="project.app" value="${package(abbrev)}"/>
-    <property name="build.dir" value="dist"/>
-    <target name="xar">
-        <mkdir dir="${build.dir}"/>
-        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="dist/** .gradle/**">
-        </zip>
-    </target>
+  <xmlproperty file="expath-pkg.xml"/>
+  <property name="project.version" value="${package(version)}"/>
+  <property name="project.app" value="${package(abbrev)}"/>
+  <property name="build.dir" value="dist"/>
+  <target name="clean" description="cleaning old builds">
+    <tstamp/>
+    <delete failonerror="false">
+      <fileset dir="${build.dir}">
+        <include name="*.xar"/>
+      </fileset>
+    </delete>
+  </target>
+  <target name="xar" depends='clean' description="compile all source files">
+    <tstamp/>
+    <mkdir dir="${build.dir}"/>
+    <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="dist/**"></zip>
+  </target>
+  <target name="test" description="running tests">
+    <tstamp/>
+    <exec executable="echo" failonerror="true">
+      <arg value="'Hello test'"/>
+    </exec>
+  </target>
 </project>
