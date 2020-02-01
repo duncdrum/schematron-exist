@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="xar" name="schematron-exist">
   <xmlproperty file="expath-pkg.xml"/>
-  <!-- TODO get version out of xar name -->
   <property name="project.version" value="${package(version)}"/>
   <property name="project.app" value="${package(abbrev)}"/>
   <property name="build.dir" value="dist"/>
@@ -17,7 +16,7 @@
   </target>
   <target name="xar" depends='clean' description="compile all source files">
     <mkdir dir="${build.dir}"/>
-    <zip basedir="." destfile="${build.dir}/${project.app}.xar" excludes="dist/** result/**"/>
+    <zip basedir="." destfile="${build.dir}/${project.app}.xar" excludes="dist/** result/** *.xpr"/>
   </target>
   <target name="test" description="executing tests" depends='clean'>
     <exec executable="curl" output="result/test-result.xml">
