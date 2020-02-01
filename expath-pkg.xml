@@ -5,7 +5,7 @@
     version="1.1.0"
     spec="1.0">
     <title>Schematron for eXist-db</title>
-    <dependency processor="eXist-db" semver-min='3.0'/>
+    <dependency processor="eXist-db" semver-min='3.0' semver-max='4.8.0'/>
     <xquery>
         <namespace>http://github.com/Schematron/schematron-exist</namespace>
         <file>schematron.xqm</file>
