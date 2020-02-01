@@ -30,14 +30,14 @@ install:
   - npm install -g bats
 
 before_script:
-  - docker cp ./dist/*.xar exist-ci:exist/autodeploy
+  - docker cp ./dist/*.xar exist-ci:exist/autodeploy/a1.xar
   - docker start exist-ci
   # exist needs time
   - sleep 30
   - docker ps
 
 script:
-  - curl -s "http://0.0.0.0:8080/exist/rest/db/system/repo/schematron-exist-1.1.0/content/test/test-suite.xq" -o result/test-result.xml
+  - curl -s "http://0.0.0.0:8080/exist/rest/db/system/repo/schematron-exist-1.2.0/content/test/test-suite.xq" -o result/test-result.xml
   - bats -t result/*.bats
 
 after_success:
