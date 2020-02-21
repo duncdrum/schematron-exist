@@ -39,8 +39,8 @@ before_script:
   - docker ps
 
 script:
-  - curl -s "http://0.0.0.0:8080/exist/rest/db/system/repo/schematron-exist-2.0.0/content/test/test-suite.xq" -o result/test-result.xml
-  - bats -t result/*.bats
+  - curl -s "http://0.0.0.0:8080/exist/rest/db/system/repo/schematron-exist-2.0.0/test/test-suite.xq" -o test/result/test-result.xml
+  - bats -t test/*.bats
 
 after_success:
   - docker stop exist-ci
