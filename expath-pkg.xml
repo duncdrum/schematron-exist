@@ -5,8 +5,9 @@
     version="2.0.0"
     spec="1.0">
     <title>Schematron for eXist-db</title>
-    <dependency processor="eXist-db" semver-min='4.7.1'/>
+    <dependency processor="eXist-db" semver-min='3.0.0' semver-max="4.8.0"/>
     <!-- <xslt>
+      <import-uri></import-uri>
       <file>iso_dsdl_include.xsl</file>
    </xslt> -->
     <xquery>

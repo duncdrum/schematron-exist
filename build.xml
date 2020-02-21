@@ -18,10 +18,10 @@
     <mkdir dir="${build.dir}"/>
     <zip basedir="." destfile="${build.dir}/${project.app}.xar" excludes="dist/** result/** *.xpr"/>
   </target>
-  <target name="test" description="executing tests" depends='clean'>
+  <target name="test" description="executing tests">
     <exec executable="curl" output="result/test-result.xml">
       <arg value="-s"/>
-      <arg value="http://0.0.0.0:8080/exist/rest/db/system/repo/schematron-exist-2.0.0/content/test/test-suite.xq"/>
+      <arg value="http://0.0.0.0:8080/exist/rest/db/system/repo/${project.app}-${project.version}/content/test/test-suite.xq"/>
     </exec>
     <exec executable="bats">
       <arg value="-t"/>
